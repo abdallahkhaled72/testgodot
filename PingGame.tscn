@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://ping pict/line.png" type="Texture" id=2]
+[ext_resource path="res://Wall.gd" type="Script" id=3]
+[ext_resource path="res://FloorCelling.gd" type="Script" id=4]
+[ext_resource path="res://Player.gd" type="Script" id=5]
+[ext_resource path="res://Ball.gd" type="Script" id=6]
+[ext_resource path="res://ping pict/ball.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.5, 31.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32.5, 31.5 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 10, 200 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 200.5 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 301.5, 10 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 300, 10 )
+
+[node name="PingGame" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 600.0
+margin_bottom = 400.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="RightPlayer" type="Area2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="RightPlayer"]
+position = Vector2( 550, 200 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightPlayer"]
+position = Vector2( 550.5, 200.5 )
+shape = SubResource( 1 )
+
+[node name="LeftPlayer" type="Area2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="LeftPlayer"]
+position = Vector2( 50, 200 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftPlayer"]
+position = Vector2( 50.5, 199.5 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="Ball" type="Area2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Ball"]
+position = Vector2( 300, 200 )
+scale = Vector2( 5.75, 6.08333 )
+texture = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+
+[node name="Seperator" type="Sprite" parent="."]
+position = Vector2( 301.388, 200.088 )
+scale = Vector2( -0.407939, 66.6575 )
+texture = ExtResource( 2 )
+
+[node name="rightWall" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rightWall"]
+position = Vector2( 610, 200 )
+shape = SubResource( 3 )
+
+[node name="leftWall" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftWall"]
+position = Vector2( -10, 199.5 )
+shape = SubResource( 4 )
+
+[node name="Floor" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 299.5, -10 )
+shape = SubResource( 5 )
+
+[node name="Celling" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Celling"]
+position = Vector2( 300, 410 )
+shape = SubResource( 6 )
+
+[connection signal="area_entered" from="RightPlayer" to="RightPlayer" method="_on_area_entered"]
+[connection signal="area_entered" from="LeftPlayer" to="RightPlayer" method="_on_area_entered"]
+[connection signal="area_entered" from="rightWall" to="rightWall" method="_on_wall_area_entered"]
+[connection signal="area_entered" from="leftWall" to="leftWall" method="_on_wall_area_entered"]
+[connection signal="area_entered" from="Floor" to="Floor" method="_on_area_extered"]
+[connection signal="area_entered" from="Celling" to="Celling" method="_on_area_extered"]
