@@ -1,6 +1,6 @@
 extends Area2D
-
-const DEFAULT_SPEED = 300
+#ezz changes ball speed from 300 to 100
+const DEFAULT_SPEED = 100
 
 var _speed = DEFAULT_SPEED
 var direction = Vector2.RIGHT
